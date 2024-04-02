@@ -44,6 +44,8 @@ jobs:
         cd web;
         docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
         docker images 
+        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+        echo "output_image=${{ steps.build-image.outputs.image }}"
 #        docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 #    - name: Update kube config
 #      run: | 
