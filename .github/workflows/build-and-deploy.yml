@@ -41,9 +41,8 @@ jobs:
         IMAGE_TAG: latest
       run: |
         docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-	      docker images
+	docker images
 #        docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-
 #    - name: Update kube config
 #      run: | 
 #            mkdir -p $HOME/.kube
