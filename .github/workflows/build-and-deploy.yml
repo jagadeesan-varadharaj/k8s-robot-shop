@@ -40,6 +40,8 @@ jobs:
         REPOSITORY: robotshop
         IMAGE_TAG: latest
       run: |
+        pwd;
+        cd web;
         docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
         docker images 
 #        docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
