@@ -40,55 +40,64 @@ jobs:
     - name: Build, tag, and push docker image to Amazon ECR
       env:
         REGISTRY: ${{ env.ECR_Repo }}
-        IMAGE_TAG: v1.0
+        IMAGE_TAG: latest
 #        REGISTRY: ${{ steps.login-ecr.outputs.registry }
 #        REPOSITORY: robotshop        
       run: |
         pwd;
-        cd user;
-        docker build -t $REGISTRY:$IMAGE_TAG .
-        docker images 
-        docker push $REGISTRY:$IMAGE_TAG
-        
         cd web;
         docker build -t $REGISTRY:$IMAGE_TAG .
         docker images 
         docker push $REGISTRY:$IMAGE_TAG
+        echo "::set-output name=image::$REGISTRY:$IMAGE_TAG"
+        
+        cd user;
+        docker build -t $REGISTRY:$IMAGE_TAG .
+        docker images 
+        docker push $REGISTRY:$IMAGE_TAG
+        echo "::set-output name=image::$REGISTRY:$IMAGE_TAG"
 
         cd shipping;
         docker build -t $REGISTRY:$IMAGE_TAG .
         docker images 
         docker push $REGISTRY:$IMAGE_TAG
+        echo "::set-output name=image::$REGISTRY:$IMAGE_TAG"
 
         cd ratings;
         docker build -t $REGISTRY:$IMAGE_TAG .
         docker images 
         docker push $REGISTRY:$IMAGE_TAG
+        echo "::set-output name=image::$REGISTRY:$IMAGE_TAG"
 
         cd payment;
         docker build -t $REGISTRY:$IMAGE_TAG .
         docker images 
         docker push $REGISTRY:$IMAGE_TAG
+        echo "::set-output name=image::$REGISTRY:$IMAGE_TAG"
         
         cd mysql;
         docker build -t $REGISTRY:$IMAGE_TAG .
         docker images 
         docker push $REGISTRY:$IMAGE_TAG
+        echo "::set-output name=image::$REGISTRY:$IMAGE_TAG"
 
         cd mongo;
         docker build -t $REGISTRY:$IMAGE_TAG .
         docker images 
         docker push $REGISTRY:$IMAGE_TAG
+        echo "::set-output name=image::$REGISTRY:$IMAGE_TAG"
 
         cd dispatch;
         docker build -t $REGISTRY:$IMAGE_TAG .
         docker images 
         docker push $REGISTRY:$IMAGE_TAG
+        echo "::set-output name=image::$REGISTRY:$IMAGE_TAG"
 
         cd cart;
         docker build -t $REGISTRY:$IMAGE_TAG .
         docker images 
         docker push $REGISTRY:$IMAGE_TAG
+        echo "::set-output name=image::$REGISTRY:$IMAGE_TAG"
 
 #        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 #        echo "output_image=$GITHUB_OUTPUT"
