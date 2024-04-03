@@ -48,6 +48,13 @@ jobs:
 #        REPOSITORY: robotshop        
       run: |
         pwd;
+        cd ..;
+        cd shipping;
+        docker build -t $REGISTRY:shipping_$IMAGE_TAG .
+        docker images 
+        docker push $REGISTRY:shipping_$IMAGE_TAG
+        echo "image=$REGISTRY:shipping_$IMAGE_TAG" >> $GITHUB_OUTPUT
+        
         cd web;
         docker build -t $REGISTRY:web_$IMAGE_TAG .
         docker images 
@@ -103,12 +110,7 @@ jobs:
         docker push $REGISTRY:cart_$IMAGE_TAG
         echo "image=$REGISTRY:cart_$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-        cd ..;
-        cd shipping;
-        docker build -t $REGISTRY:shipping_$IMAGE_TAG .
-        docker images 
-        docker push $REGISTRY:shipping_$IMAGE_TAG
-        echo "image=$REGISTRY:shipping_$IMAGE_TAG" >> $GITHUB_OUTPUT
+
 
 
 #        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
