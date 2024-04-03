@@ -39,7 +39,7 @@ jobs:
 
     - name: Build, tag, and push docker image to Amazon ECR
       env:
-        REGISTRY: $ECR_Repo
+        REGISTRY: ${{ env.ECR_Repo }}
         IMAGE_TAG: v1.0
 #        REGISTRY: ${{ steps.login-ecr.outputs.registry }
 #        REPOSITORY: robotshop        
