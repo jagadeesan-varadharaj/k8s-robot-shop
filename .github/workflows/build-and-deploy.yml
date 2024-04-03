@@ -48,7 +48,6 @@ jobs:
 #        REPOSITORY: robotshop        
       run: |
         pwd;
-        cd ..;
         cd shipping;
         docker build -t $REGISTRY:shipping_$IMAGE_TAG .
         docker images 
