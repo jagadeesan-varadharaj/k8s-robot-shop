@@ -47,25 +47,29 @@ jobs:
 #        REGISTRY: ${{ steps.login-ecr.outputs.registry }
 #        REPOSITORY: robotshop        
       run: |
-        pwd;
-        cd shipping;
-        docker build -t $REGISTRY:shipping_$IMAGE_TAG .
-        docker images 
-        docker push $REGISTRY:shipping_$IMAGE_TAG
-        echo "image=$REGISTRY:shipping_$IMAGE_TAG" >> $GITHUB_OUTPUT
-        
+        pwd;        
         cd web;
         docker build -t $REGISTRY:web_$IMAGE_TAG .
         docker images 
         docker push $REGISTRY:web_$IMAGE_TAG
         echo "image=$REGISTRY:web_$IMAGE_TAG" >> $GITHUB_OUTPUT
-
+        echo "output_image=$GITHUB_OUTPUT"
+        
+        cd ..;
+        cd shipping;
+        docker build -t $REGISTRY:shipping_$IMAGE_TAG .
+        docker images 
+        docker push $REGISTRY:shipping_$IMAGE_TAG
+        echo "image=$REGISTRY:shipping_$IMAGE_TAG" >> $GITHUB_OUTPUT
+        echo "output_image=$GITHUB_OUTPUT"
+        
         cd ..;
         cd user;
         docker build -t $REGISTRY:user_$IMAGE_TAG .
         docker images 
         docker push $REGISTRY:user_$IMAGE_TAG
         echo "image=$REGISTRY:user_$IMAGE_TAG" >> $GITHUB_OUTPUT
+        echo "output_image=$GITHUB_OUTPUT"
 
         cd ..;
         cd ratings;
@@ -73,6 +77,7 @@ jobs:
         docker images 
         docker push $REGISTRY:ratings_$IMAGE_TAG
         echo "image=$REGISTRY:ratings_$IMAGE_TAG" >> $GITHUB_OUTPUT
+        echo "output_image=$GITHUB_OUTPUT"
 
         cd ..;
         cd payment;
@@ -80,6 +85,7 @@ jobs:
         docker images 
         docker push $REGISTRY:payment_$IMAGE_TAG
         echo "image=$REGISTRY:payment_$IMAGE_TAG" >> $GITHUB_OUTPUT
+        echo "output_image=$GITHUB_OUTPUT"
 
         cd ..;        
         cd mysql;
@@ -87,6 +93,7 @@ jobs:
         docker images 
         docker push $REGISTRY:mysql_$IMAGE_TAG
         echo "image=$REGISTRY:mysql_$IMAGE_TAG" >> $GITHUB_OUTPUT
+        echo "output_image=$GITHUB_OUTPUT"
 
         cd ..;
         cd mongo;
@@ -94,6 +101,7 @@ jobs:
         docker images 
         docker push $REGISTRY:mongo_$IMAGE_TAG
         echo "image=$REGISTRY:mongo_$IMAGE_TAG" >> $GITHUB_OUTPUT
+        echo "output_image=$GITHUB_OUTPUT"
 
         cd ..;
         cd dispatch;
@@ -101,6 +109,7 @@ jobs:
         docker images 
         docker push $REGISTRY:dispatch_$IMAGE_TAG
         echo "image=$REGISTRY:dispatch_$IMAGE_TAG" >> $GITHUB_OUTPUT
+        echo "output_image=$GITHUB_OUTPUT"
 
         cd ..;
         cd cart;
@@ -108,7 +117,7 @@ jobs:
         docker images 
         docker push $REGISTRY:cart_$IMAGE_TAG
         echo "image=$REGISTRY:cart_$IMAGE_TAG" >> $GITHUB_OUTPUT
-
+        echo "output_image=$GITHUB_OUTPUT"
 
 
 
