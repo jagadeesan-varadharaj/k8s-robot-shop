@@ -55,6 +55,7 @@ jobs:
         echo "::set-output name=image::$REGISTRY:web_$IMAGE_TAG"
 
         pwd;ls;ls -l;
+        cd ..;
         cd user;
         docker build -t $REGISTRY:user_$IMAGE_TAG .
         docker images 
