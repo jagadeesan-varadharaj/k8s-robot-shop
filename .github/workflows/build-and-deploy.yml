@@ -36,7 +36,7 @@ jobs:
 
     - name: Login to Amazon ECR
       id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
+      uses: aws-actions/amazon-ecr-login@v2
 
     - name: Build, tag, and push docker image to Amazon ECR
       env:
@@ -47,58 +47,58 @@ jobs:
       run: |
         pwd;
         cd web;
-        docker build -t $REGISTRY:$IMAGE_TAG .
+        docker build -t $REGISTRY:web_$IMAGE_TAG .
         docker images 
-        docker push $REGISTRY:$IMAGE_TAG
-        echo "::set-output name=image::$REGISTRY:$IMAGE_TAG"
+        docker push $REGISTRY:web_$IMAGE_TAG
+        echo "::set-output name=image::$REGISTRY:web_$IMAGE_TAG"
         
         cd user;
-        docker build -t $REGISTRY:$IMAGE_TAG .
+        docker build -t $REGISTRY:user_$IMAGE_TAG .
         docker images 
-        docker push $REGISTRY:$IMAGE_TAG
-        echo "::set-output name=image::$REGISTRY:$IMAGE_TAG"
+        docker push $REGISTRY:user_$IMAGE_TAG
+        echo "::set-output name=image::$REGISTRY:user_$IMAGE_TAG"
 
         cd shipping;
-        docker build -t $REGISTRY:$IMAGE_TAG .
+        docker build -t $REGISTRY:shipping_$IMAGE_TAG .
         docker images 
-        docker push $REGISTRY:$IMAGE_TAG
-        echo "::set-output name=image::$REGISTRY:$IMAGE_TAG"
+        docker push $REGISTRY:shipping_$IMAGE_TAG
+        echo "::set-output name=image::$REGISTRY:shipping_$IMAGE_TAG"
 
         cd ratings;
-        docker build -t $REGISTRY:$IMAGE_TAG .
+        docker build -t $REGISTRY:ratings_$IMAGE_TAG .
         docker images 
-        docker push $REGISTRY:$IMAGE_TAG
-        echo "::set-output name=image::$REGISTRY:$IMAGE_TAG"
+        docker push $REGISTRY:ratings_$IMAGE_TAG
+        echo "::set-output name=image::$REGISTRY:ratings_$IMAGE_TAG"
 
         cd payment;
-        docker build -t $REGISTRY:$IMAGE_TAG .
+        docker build -t $REGISTRY:payment_$IMAGE_TAG .
         docker images 
-        docker push $REGISTRY:$IMAGE_TAG
-        echo "::set-output name=image::$REGISTRY:$IMAGE_TAG"
+        docker push $REGISTRY:payment_$IMAGE_TAG
+        echo "::set-output name=image::$REGISTRY:payment_$IMAGE_TAG"
         
         cd mysql;
-        docker build -t $REGISTRY:$IMAGE_TAG .
+        docker build -t $REGISTRY:mysql_$IMAGE_TAG .
         docker images 
-        docker push $REGISTRY:$IMAGE_TAG
-        echo "::set-output name=image::$REGISTRY:$IMAGE_TAG"
+        docker push $REGISTRY:mysql_$IMAGE_TAG
+        echo "::set-output name=image::$REGISTRY:mysql_$IMAGE_TAG"
 
         cd mongo;
-        docker build -t $REGISTRY:$IMAGE_TAG .
+        docker build -t $REGISTRY:mongo_$IMAGE_TAG .
         docker images 
-        docker push $REGISTRY:$IMAGE_TAG
-        echo "::set-output name=image::$REGISTRY:$IMAGE_TAG"
+        docker push $REGISTRY:mongo_$IMAGE_TAG
+        echo "::set-output name=image::$REGISTRY:mongo_$IMAGE_TAG"
 
         cd dispatch;
-        docker build -t $REGISTRY:$IMAGE_TAG .
+        docker build -t $REGISTRY:dispatch_$IMAGE_TAG .
         docker images 
-        docker push $REGISTRY:$IMAGE_TAG
-        echo "::set-output name=image::$REGISTRY:$IMAGE_TAG"
+        docker push $REGISTRY:dispatch_$IMAGE_TAG
+        echo "::set-output name=image::$REGISTRY:dispatch_$IMAGE_TAG"
 
         cd cart;
-        docker build -t $REGISTRY:$IMAGE_TAG .
+        docker build -t $REGISTRY:cart_$IMAGE_TAG .
         docker images 
-        docker push $REGISTRY:$IMAGE_TAG
-        echo "::set-output name=image::$REGISTRY:$IMAGE_TAG"
+        docker push $REGISTRY:cart_$IMAGE_TAG
+        echo "::set-output name=image::$REGISTRY:cart_$IMAGE_TAG"
 
 #        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 #        echo "output_image=$GITHUB_OUTPUT"
