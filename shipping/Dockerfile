@@ -5,6 +5,13 @@ FROM debian:10 AS build
 
 RUN apt update
 #RUN apt -y install maven
+RUN wget https://mirrors.estointernet.in/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
+RUN tar -xvf apache-maven-3.6.3-bin.tar.gz
+RUN mv apache-maven-3.6.3 /opt/
+
+RUN M2_HOME='/opt/apache-maven-3.6.3'
+RUN PATH="$M2_HOME/bin:$PATH"
+RUN export PATH
 
 WORKDIR /opt/shipping
 
