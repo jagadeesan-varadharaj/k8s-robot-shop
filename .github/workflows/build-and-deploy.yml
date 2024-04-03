@@ -52,57 +52,63 @@ jobs:
         docker build -t $REGISTRY:web_$IMAGE_TAG .
         docker images 
         docker push $REGISTRY:web_$IMAGE_TAG
-        echo "::set-output name=image::$REGISTRY:web_$IMAGE_TAG"
+        echo "image=$REGISTRY:web_$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-        pwd;ls;ls -l;
         cd ..;
         cd user;
         docker build -t $REGISTRY:user_$IMAGE_TAG .
         docker images 
         docker push $REGISTRY:user_$IMAGE_TAG
-        echo "::set-output name=image::$REGISTRY:user_$IMAGE_TAG"
+        echo "image=$REGISTRY:user_$IMAGE_TAG" >> $GITHUB_OUTPUT
 
+        cd ..;
         cd shipping;
         docker build -t $REGISTRY:shipping_$IMAGE_TAG .
         docker images 
         docker push $REGISTRY:shipping_$IMAGE_TAG
-        echo "::set-output name=image::$REGISTRY:shipping_$IMAGE_TAG"
+        echo "image=$REGISTRY:shipping_$IMAGE_TAG" >> $GITHUB_OUTPUT
 
+        cd ..;
         cd ratings;
         docker build -t $REGISTRY:ratings_$IMAGE_TAG .
         docker images 
         docker push $REGISTRY:ratings_$IMAGE_TAG
-        echo "::set-output name=image::$REGISTRY:ratings_$IMAGE_TAG"
+        echo "image=$REGISTRY:ratings_$IMAGE_TAG" >> $GITHUB_OUTPUT
 
+        cd ..;
         cd payment;
         docker build -t $REGISTRY:payment_$IMAGE_TAG .
         docker images 
         docker push $REGISTRY:payment_$IMAGE_TAG
-        echo "::set-output name=image::$REGISTRY:payment_$IMAGE_TAG"
-        
+        echo "image=$REGISTRY:payment_$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+        cd ..;        
         cd mysql;
         docker build -t $REGISTRY:mysql_$IMAGE_TAG .
         docker images 
         docker push $REGISTRY:mysql_$IMAGE_TAG
-        echo "::set-output name=image::$REGISTRY:mysql_$IMAGE_TAG"
+        echo "image=$REGISTRY:mysql_$IMAGE_TAG" >> $GITHUB_OUTPUT
 
+        cd ..;
         cd mongo;
         docker build -t $REGISTRY:mongo_$IMAGE_TAG .
         docker images 
         docker push $REGISTRY:mongo_$IMAGE_TAG
-        echo "::set-output name=image::$REGISTRY:mongo_$IMAGE_TAG"
+        echo "image=$REGISTRY:mongo_$IMAGE_TAG" >> $GITHUB_OUTPUT
 
+        cd ..;
         cd dispatch;
         docker build -t $REGISTRY:dispatch_$IMAGE_TAG .
         docker images 
         docker push $REGISTRY:dispatch_$IMAGE_TAG
-        echo "::set-output name=image::$REGISTRY:dispatch_$IMAGE_TAG"
+        echo "image=$REGISTRY:dispatch_$IMAGE_TAG" >> $GITHUB_OUTPUT
 
+        cd ..;
         cd cart;
         docker build -t $REGISTRY:cart_$IMAGE_TAG .
         docker images 
         docker push $REGISTRY:cart_$IMAGE_TAG
-        echo "::set-output name=image::$REGISTRY:cart_$IMAGE_TAG"
+        echo "image=$REGISTRY:cart_$IMAGE_TAG" >> $GITHUB_OUTPUT
 
 #        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 #        echo "output_image=$GITHUB_OUTPUT"
