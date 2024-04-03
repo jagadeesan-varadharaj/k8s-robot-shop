@@ -1,5 +1,6 @@
 name: app deploy to EKS
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - 'master'
@@ -9,6 +10,9 @@ on:
       - 'load-gen/**'
       - 'OpenShift/**'
       - 'Swarm/**'
+env:
+  ECR_Repo: public.ecr.aws/d3m1f3x5/robotshop
+      
 
 jobs:
   deploy:
@@ -17,11 +21,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Install kubectl
-      uses: azure/setup-kubectl@v2.0
-      with:
-        version: 'v1.24.0' # default is latest stable
-      id: install
+#    - name: Install kubectl
+#      uses: azure/setup-kubectl@v2.0
+#      with:
+#        version: 'v1.24.0' # default is latest stable
+#      id: install
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -32,17 +36,93 @@ jobs:
 
     - name: Login to Amazon ECR
       id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
+      uses: aws-actions/amazon-ecr-login@v2
+      with:
+        registry-type: public      
 
     - name: Build, tag, and push docker image to Amazon ECR
       env:
-        REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        REPOSITORY: robotshop
+        REGISTRY: ${{ env.ECR_Repo }}
         IMAGE_TAG: latest
+#        REGISTRY: ${{ steps.login-ecr.outputs.registry }
+#        REPOSITORY: robotshop        
       run: |
-        docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-#	docker images
-#        docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+        pwd;        
+        cd web;
+        docker build -t $REGISTRY:web_$IMAGE_TAG .
+        docker images 
+        docker push $REGISTRY:web_$IMAGE_TAG
+        echo "image=$REGISTRY:web_$IMAGE_TAG" >> $GITHUB_OUTPUT
+        echo "output_image=$GITHUB_OUTPUT"
+        
+        cd ..;
+        cd shipping;
+        docker build -t $REGISTRY:shipping_$IMAGE_TAG .
+        docker images 
+        docker push $REGISTRY:shipping_$IMAGE_TAG
+        echo "image=$REGISTRY:shipping_$IMAGE_TAG" >> $GITHUB_OUTPUT
+        echo "output_image=$GITHUB_OUTPUT"
+        
+        cd ..;
+        cd user;
+        docker build -t $REGISTRY:user_$IMAGE_TAG .
+        docker images 
+        docker push $REGISTRY:user_$IMAGE_TAG
+        echo "image=$REGISTRY:user_$IMAGE_TAG" >> $GITHUB_OUTPUT
+        echo "output_image=$GITHUB_OUTPUT"
+
+        cd ..;
+        cd ratings;
+        docker build -t $REGISTRY:ratings_$IMAGE_TAG .
+        docker images 
+        docker push $REGISTRY:ratings_$IMAGE_TAG
+        echo "image=$REGISTRY:ratings_$IMAGE_TAG" >> $GITHUB_OUTPUT
+        echo "output_image=$GITHUB_OUTPUT"
+
+        cd ..;
+        cd payment;
+        docker build -t $REGISTRY:payment_$IMAGE_TAG .
+        docker images 
+        docker push $REGISTRY:payment_$IMAGE_TAG
+        echo "image=$REGISTRY:payment_$IMAGE_TAG" >> $GITHUB_OUTPUT
+        echo "output_image=$GITHUB_OUTPUT"
+
+        cd ..;        
+        cd mysql;
+        docker build -t $REGISTRY:mysql_$IMAGE_TAG .
+        docker images 
+        docker push $REGISTRY:mysql_$IMAGE_TAG
+        echo "image=$REGISTRY:mysql_$IMAGE_TAG" >> $GITHUB_OUTPUT
+        echo "output_image=$GITHUB_OUTPUT"
+
+        cd ..;
+        cd mongo;
+        docker build -t $REGISTRY:mongo_$IMAGE_TAG .
+        docker images 
+        docker push $REGISTRY:mongo_$IMAGE_TAG
+        echo "image=$REGISTRY:mongo_$IMAGE_TAG" >> $GITHUB_OUTPUT
+        echo "output_image=$GITHUB_OUTPUT"
+
+        cd ..;
+        cd dispatch;
+        docker build -t $REGISTRY:dispatch_$IMAGE_TAG .
+        docker images 
+        docker push $REGISTRY:dispatch_$IMAGE_TAG
+        echo "image=$REGISTRY:dispatch_$IMAGE_TAG" >> $GITHUB_OUTPUT
+        echo "output_image=$GITHUB_OUTPUT"
+
+        cd ..;
+        cd cart;
+        docker build -t $REGISTRY:cart_$IMAGE_TAG .
+        docker images 
+        docker push $REGISTRY:cart_$IMAGE_TAG
+        echo "image=$REGISTRY:cart_$IMAGE_TAG" >> $GITHUB_OUTPUT
+        echo "output_image=$GITHUB_OUTPUT"
+
+
+
+#        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+#        echo "output_image=$GITHUB_OUTPUT"
 #    - name: Update kube config
 #      run: | 
 #            mkdir -p $HOME/.kube
