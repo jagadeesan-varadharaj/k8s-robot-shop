@@ -45,12 +45,12 @@ jobs:
 #        REPOSITORY: robotshop        
       run: |
         pwd;
-        cd web;
+        cd user;
         docker build -t $REGISTRY:$IMAGE_TAG .
         docker images 
         docker push $REGISTRY:$IMAGE_TAG
-
-        cd user;
+        
+        cd web;
         docker build -t $REGISTRY:$IMAGE_TAG .
         docker images 
         docker push $REGISTRY:$IMAGE_TAG
